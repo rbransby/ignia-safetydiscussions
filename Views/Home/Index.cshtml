@@ -1,0 +1,178 @@
+<link rel="import" href="~/lib/polymer/polymer.html">
+<link rel="import" href="~/lib/paper-item/paper-item.html">
+<link rel="import" href="~/lib/iron-ajax/iron-ajax.html">
+<link rel="import" href="~/lib/paper-material/paper-material.html">
+<link rel="import" href="~/lib/paper-fab/paper-fab.html">
+<link rel="import" href="~/lib/iron-icons/iron-icons.html">
+<link rel="import" href="~/lib/paper-input/paper-input.html">
+<link rel="import" href="~/lib/paper-input/paper-textarea.html">
+<link rel="import" href="~/lib/paper-dialog/paper-dialog.html">
+<link rel="import" href="~/lib/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="~/lib/paper-listbox/paper-listbox.html">
+<link rel="import" href="~/lib/paper-button/paper-button.html">
+<link rel="import" href="~/lib/neon-animation/animations/scale-up-animation.html">
+<link rel="import" href="~/lib/neon-animation/animations/fade-out-animation.html"> @{ ViewData["Title"] = "Home Page"; }
+
+<style>
+	.title {
+		margin-left: 10px;
+		vertical-align: middle;
+		display: inline-block;
+		flex: 8;
+		align-self: center;
+	}
+	
+	.cardContents {
+		margin-left: 10px;
+		margin-right: 10px;
+		display: flex;
+		flex-direction: row;
+		max-width: 100%;
+		height: 100%;
+	}
+	
+	.content {
+		margin-top: 5px;
+		margin-bottom: 5px;
+	}
+	
+	.names {
+		font-size: 0.8em;
+		text-transform: uppercase;
+		white-space: nowrap;
+		color: #212121;
+	}
+	
+	.card {
+		margin: 5px 0 5px 0;
+	}
+	
+	.list {
+		width: 760px;
+		padding: 5px;
+	}
+	
+	#addDiscussionDialog {
+		min-width: 100vh;
+		min-height: 40vh;
+		position: relative;
+	}
+	
+	.form-field {
+		margin-top: 20px;
+	}
+	
+	paper-dialog .buttons paper-button {
+		margin: 10px;
+	}
+</style>
+
+<template id="app" is="dom-bind">
+	<iron-ajax url="/api/user" last-response="{{users}}" auto>
+	</iron-ajax>
+	<iron-ajax url="/api/safetydiscussion" last-response="{{discussions}}" auto>
+	</iron-ajax>
+    <iron-ajax
+        id="postSafetyDiscussionAjax"
+        url="/api/safetydiscussion"
+        handle-as="json"
+        content-type="application/json"
+        method="POST"        
+        on-response="postResponse"
+        debounce-duration="3000">
+    </iron-ajax>
+	<div class="list">
+		<template is="dom-repeat" items="{{discussions}}">
+			<paper-material id$="{{item.id}}" class="card">
+				<div class="cardContents">
+					<span class$="icon"></span>
+					<span class="title">
+                  <p class="date">{{formatDate(item.date)}}</p>                  
+                  <p class="content names"><strong>{{item.observer.displayName}}</strong> observed <strong>{{item.colleague.displayName}}</strong></p>
+                  <p class="subject"><strong>{{item.subject}}</strong></p>
+                  <p class="outcomes">{{item.outcomes}}</p>
+                </span>
+				</div>
+			</paper-material>
+		</template>
+		<paper-fab on-tap="onAddButtonTapped" icon="add" id="addButton"></paper-fab>
+	</div>
+	<paper-dialog id="addDiscussionDialog" class="paper-date-picker-dialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation"
+		on-iron-overlay-closed="onAddDialogClosed">
+
+		<paper-dropdown-menu selected-item="{{selectedObserver}}" label="Observer">
+			<paper-listbox class="dropdown-content">
+				<template is="dom-repeat" items="{{users}}">
+					<paper-item id$="{{item.id}}">{{item.displayName}}</paper-item>
+				</template>
+			</paper-listbox>
+		</paper-dropdown-menu>
+
+		<div class="form-field">
+			<label for="date">Date of observation</label>
+			<input id="dateInput" is="iron-input" value$="{{dateValue}}" type="date"></input>
+		</div>
+		<paper-input id="locationInput" value="{{locationValue}}" type="text" label="Location"></paper-input>
+		<paper-dropdown-menu selected-item={{selectedColleague}} label="Colleague observed">
+			<paper-listbox class="dropdown-content">
+				<template is="dom-repeat" items="{{users}}">
+					<paper-item id$="{{item.id}}">{{item.displayName}}</paper-item>
+				</template>
+			</paper-listbox>
+		</paper-dropdown-menu>
+
+		<paper-input id="subjectInput" type="text" value="{{subjectValue}}" label="Subject"></paper-input>
+		<paper-textarea id="outcomesInput" type="text" value="{{outcomesValue}}" label="Outcomes" rows="5"></paper-textarea>
+
+		<div class="buttons">
+			<paper-button dialog-dismiss>Cancel</paper-button>
+			<paper-button on-tap="saveButtonTapped">Save</paper-button>
+		</div>
+	</paper-dialog>
+</template>
+
+<script>
+    "use strict";
+    let app = document.getElementById('app');
+    app.addEventListener('dom-change', () => {
+        
+    });
+
+    app.formatDate = (rawDateString) => {
+        return moment(rawDateString).format('MMMM Do YYYY');
+    };
+
+    app.onAddButtonTapped = (e) => {
+        let dialog = app.$.addDiscussionDialog;
+        dialog.open();
+    };
+
+    app.onAddDialogClosed = (e) => {
+        let reason = e.detail;
+        if (reason.confirmed)
+        {
+            // save the new item...
+        }
+    };
+
+    app.saveButtonTapped = (e) => {
+        let dateInputElement = app.$.dateInput;
+        let newDiscussion = { 
+            observeruserid : app.selectedObserver.id,
+            date: dateInputElement.value,
+            location: app.locationValue,
+            colleagueuserid: app.selectedColleague.id,
+            subject: app.subjectValue,
+            outcomes: app.outcomesValue
+        }
+
+        let ajaxPostElement = app.$.postSafetyDiscussionAjax;
+        ajaxPostElement.body = newDiscussion;
+        ajaxPostElement.generateRequest();
+    };
+
+    app.postResponse = (e) => {
+        console.log(e);
+    };
+    
+</script>
