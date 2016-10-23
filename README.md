@@ -21,7 +21,7 @@ Instructions provided below to (hopefully easily) automagically install the nece
 ## How to Install
 
 *   Install ASP.NET Core: https://www.microsoft.com/net/core#windows
-*   Install bower (package manager for the front end packages)
+*   Install bower https://bower.io/#install-bower (package manager for the front end packages)
 *   Clone this repo
 *   Run 'dotnet restore' to grab the necessary nuget packages for the backend
 *   Run 'bower install' to pull down the necessary front-end libraries.
