@@ -11,7 +11,9 @@
 <link rel="import" href="~/lib/paper-listbox/paper-listbox.html">
 <link rel="import" href="~/lib/paper-button/paper-button.html">
 <link rel="import" href="~/lib/neon-animation/animations/scale-up-animation.html">
-<link rel="import" href="~/lib/neon-animation/animations/fade-out-animation.html"> @{ ViewData["Title"] = "Home Page"; }
+<link rel="import" href="~/lib/neon-animation/animations/fade-out-animation.html"> 
+
+@{ ViewData["Title"] = "Home Page"; }
 
 <style>
 	.title {
@@ -54,8 +56,7 @@
 	
 	#addDiscussionDialog {
 		min-width: 100vh;
-		min-height: 40vh;
-		position: relative;
+		min-height: 40vh;		
 	}
 	
 	.form-field {
@@ -64,6 +65,10 @@
 	
 	paper-dialog .buttons paper-button {
 		margin: 10px;
+	}
+
+	.dialogItem {
+		margin:0;
 	}
 </style>
 
@@ -97,10 +102,10 @@
 		</template>
 		<paper-fab on-tap="onAddButtonTapped" icon="add" id="addButton"></paper-fab>
 	</div>
-	<paper-dialog id="addDiscussionDialog" class="paper-date-picker-dialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation"
-		on-iron-overlay-closed="onAddDialogClosed">
-
-		<paper-dropdown-menu selected-item="{{selectedObserver}}" label="Observer">
+	<paper-dialog id="addDiscussionDialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation"
+		on-iron-overlay-closed="onAddDialogClosed">		
+		<h2>Add Safety Discussion</h2>
+		<paper-dropdown-menu class="dialogItem" selected-item="{{selectedObserver}}" label="Observer">
 			<paper-listbox class="dropdown-content">
 				<template is="dom-repeat" items="{{users}}">
 					<paper-item id$="{{item.id}}">{{item.displayName}}</paper-item>
@@ -108,12 +113,12 @@
 			</paper-listbox>
 		</paper-dropdown-menu>
 
-		<div class="form-field">
+		<div class="dialogItem">
 			<label for="date">Date of observation</label>
 			<input id="dateInput" is="iron-input" value$="{{dateValue}}" type="date"></input>
 		</div>
-		<paper-input id="locationInput" value="{{locationValue}}" type="text" label="Location"></paper-input>
-		<paper-dropdown-menu selected-item={{selectedColleague}} label="Colleague observed">
+		<paper-input class="dialogItem" id="locationInput" value="{{locationValue}}" type="text" label="Location"></paper-input>
+		<paper-dropdown-menu class="dialogItem" selected-item={{selectedColleague}} label="Colleague observed">
 			<paper-listbox class="dropdown-content">
 				<template is="dom-repeat" items="{{users}}">
 					<paper-item id$="{{item.id}}">{{item.displayName}}</paper-item>
@@ -121,8 +126,8 @@
 			</paper-listbox>
 		</paper-dropdown-menu>
 
-		<paper-input id="subjectInput" type="text" value="{{subjectValue}}" label="Subject"></paper-input>
-		<paper-textarea id="outcomesInput" type="text" value="{{outcomesValue}}" label="Outcomes" rows="5"></paper-textarea>
+		<paper-input class="dialogItem" id="subjectInput" type="text" value="{{subjectValue}}" label="Subject"></paper-input>
+		<paper-textarea class="dialogItem" id="outcomesInput" type="text" value="{{outcomesValue}}" label="Outcomes" rows="5"></paper-textarea>
 
 		<div class="buttons">
 			<paper-button dialog-dismiss>Cancel</paper-button>
