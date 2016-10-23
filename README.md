@@ -1,39 +1,22 @@
-# Welcome to ASP.NET Core
+# Ignia Safety Discussions Prototype
 
-We've made some big updates in this release, so it’s **important** that you spend a few minutes to learn what’s new.
+This repository is my response to the Ignia Safety Discussion prototype problem.
 
-You've created a new ASP.NET Core project. [Learn what's new](https://go.microsoft.com/fwlink/?LinkId=518016)
+The prototype allows a user to record a safety discussion they've had with a colleague and also review all their previous discussions.
 
-## This application consists of:
+## Prototype TODO:
 
-*   Sample pages using ASP.NET Core MVC
-*   [Gulp](https://go.microsoft.com/fwlink/?LinkId=518007) and [Bower](https://go.microsoft.com/fwlink/?LinkId=518004) for managing client-side libraries
-*   Theming using [Bootstrap](https://go.microsoft.com/fwlink/?LinkID=398939)
+As this is a prototype there are obvious limitations that would need to be addressed prior to a production deployment:
+*   Persistance - currently the Data is stored temporarily using the Entity Framework In-Memory provider. 
+*   Authorization/Authentication - A mechanism to allow a user to authenticate. Currently there is no security implemented at all.
+*   Design/Style/Beautification - It looks pretty ugly at the moment :)
 
-## How to
+## How to Install
 
-*   [Add a Controller and View](https://go.microsoft.com/fwlink/?LinkID=398600)
-*   [Add an appsetting in config and access it in app.](https://go.microsoft.com/fwlink/?LinkID=699562)
-*   [Manage User Secrets using Secret Manager.](https://go.microsoft.com/fwlink/?LinkId=699315)
-*   [Use logging to log a message.](https://go.microsoft.com/fwlink/?LinkId=699316)
-*   [Add packages using NuGet.](https://go.microsoft.com/fwlink/?LinkId=699317)
-*   [Add client packages using Bower.](https://go.microsoft.com/fwlink/?LinkId=699318)
-*   [Target development, staging or production environment.](https://go.microsoft.com/fwlink/?LinkId=699319)
-
-## Overview
-
-*   [Conceptual overview of what is ASP.NET Core](https://go.microsoft.com/fwlink/?LinkId=518008)
-*   [Fundamentals of ASP.NET Core such as Startup and middleware.](https://go.microsoft.com/fwlink/?LinkId=699320)
-*   [Working with Data](https://go.microsoft.com/fwlink/?LinkId=398602)
-*   [Security](https://go.microsoft.com/fwlink/?LinkId=398603)
-*   [Client side development](https://go.microsoft.com/fwlink/?LinkID=699321)
-*   [Develop on different platforms](https://go.microsoft.com/fwlink/?LinkID=699322)
-*   [Read more on the documentation site](https://go.microsoft.com/fwlink/?LinkID=699323)
-
-## Run & Deploy
-
-*   [Run your app](https://go.microsoft.com/fwlink/?LinkID=517851)
-*   [Run tools such as EF migrations and more](https://go.microsoft.com/fwlink/?LinkID=517853)
-*   [Publish to Microsoft Azure Web Apps](https://go.microsoft.com/fwlink/?LinkID=398609)
-
-We would love to hear your [feedback](https://go.microsoft.com/fwlink/?LinkId=518015)
+*   Install ASP.NET Core: https://www.microsoft.com/net/core#windows
+*   Install bower (package manager for the front end packages)
+*   Clone this repo
+*   Run 'dotnet restore' to grab the necessary nuget packages for the backend
+*   Run 'bower install' to pull down the necessary front-end libraries.
+*   Run 'dotnet run' to fire up a mini-web-server and serve up the app
+*   Navigate to http://localhost:5000 to check things out.
