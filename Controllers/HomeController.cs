@@ -14,5 +14,11 @@ namespace SafetyDiscussionApplication.Controllers
         {
             return View();
         }
+
+        [Route("/{userId:int}")]
+        public IActionResult Index(int userId)
+        {
+            return View("Index", userId);
+        }
     }
 }

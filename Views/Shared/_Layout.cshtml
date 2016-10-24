@@ -18,25 +18,7 @@
     <script src="~/lib/webcomponentsjs/webcomponents-lite.js"></script>
     <script src="~/lib/moment/min/moment.min.js"></script>
 </head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a asp-controller="Home" asp-action="Index" class="navbar-brand">SafetyDiscussionApplication</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-controller="Home" asp-action="Index">Home</a></li>                  
-                </ul>                
-            </div>
-        </div>
-    </div>
+<body>    
     <div class="container body-content">
         @RenderBody()
         <hr />

@@ -1,3 +1,5 @@
+@model int
+
 <link rel="import" href="~/lib/polymer/polymer.html">
 <link rel="import" href="~/lib/paper-item/paper-item.html">
 <link rel="import" href="~/lib/iron-ajax/iron-ajax.html">
@@ -75,7 +77,7 @@
 <template id="app" is="dom-bind">
 	<iron-ajax url="/api/user" last-response="{{users}}" auto>
 	</iron-ajax>
-	<iron-ajax url="/api/safetydiscussion" last-response="{{discussions}}" auto>
+	<iron-ajax url="/api/safetydiscussion/@(Model == 0 ? "" : Model.ToString())" last-response="{{discussions}}" auto>
 	</iron-ajax>
     <iron-ajax
         id="postSafetyDiscussionAjax"
