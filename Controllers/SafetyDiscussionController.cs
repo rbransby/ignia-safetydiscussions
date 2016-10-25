@@ -8,8 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using SafetyDiscussionApplication.Models;
 
 namespace SafetyDiscussionApplication.Controllers
-{
-    [Route("api/[controller]")]
+{    
     public class SafetyDiscussionController : Controller
     {
         private ApplicationDbContext _context;
@@ -18,7 +17,13 @@ namespace SafetyDiscussionApplication.Controllers
             this._context = context;
         }
 
-        [HttpGet(Name="GetAll")]
+        [Route("[controller]/{userId:int}", Name="ViewSafetyDiscussionByUser")]
+        public IActionResult Index(int userId)
+        {
+            return View("ListByUser", userId);
+        }
+
+        [HttpGet("api/[controller]",Name="GetAll")]
         public async Task<IActionResult> Get()
         {
             var discussions = await _context.SafetyDiscussions
@@ -29,7 +34,7 @@ namespace SafetyDiscussionApplication.Controllers
             return Ok(discussions);
         }
 
-        [HttpGet("{id:int}")]
+        [HttpGet("api/[controller]/{id:int}", Name="GetSafetyDiscussionById")]
         public async Task<IActionResult> Get(int id)
         {
             var discussion = await _context.SafetyDiscussions
@@ -42,7 +47,19 @@ namespace SafetyDiscussionApplication.Controllers
             return Ok(discussion);
         }
 
-        [HttpPost]
+        [HttpGet("api/[controller]/[action]/{userId:int}", Name="GetSafetyDiscussionsByObserver")]
+        public async Task<IActionResult> GetByObserver(int userId)
+        {
+            var safetyDiscussions = await _context.SafetyDiscussions
+                                            .Include(sd => sd.Observer)
+                                            .Include(sd => sd.Colleague)
+                                            .Where(sd => sd.ObserverUserId == userId)
+                                            .ToListAsync();
+            
+            return Ok(safetyDiscussions);
+        }
+
+        [HttpPost("api/[controller]")]
         public async Task<IActionResult> Post([FromBody] SafetyDiscussion safetyDiscussion)         
         {
             int maxId = _context.SafetyDiscussions.Select(sd => sd.Id).Max();
@@ -50,7 +67,7 @@ namespace SafetyDiscussionApplication.Controllers
             _context.SafetyDiscussions.Add(safetyDiscussion);
             await _context.SaveChangesAsync();
 
-            return CreatedAtRoute("GetAll", new {id = safetyDiscussion.Id}, safetyDiscussion);
+            return CreatedAtRoute("GetSafetyDiscussionById", new {id = safetyDiscussion.Id}, safetyDiscussion);
         }
 
         [HttpDelete]

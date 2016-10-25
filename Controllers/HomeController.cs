@@ -7,12 +7,20 @@ using SafetyDiscussionApplication.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace SafetyDiscussionApplication.Controllers
-{    
+{        
     public class HomeController : Controller
     {
+        private ApplicationDbContext _context;
+
+        public HomeController(ApplicationDbContext context)
+        {
+            this._context = context;
+        }
+
         public IActionResult Index()
         {
-            return View();
+            var users = _context.Users.ToList();
+            return View(users);
         }
 
         [Route("/{userId:int}")]
