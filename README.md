@@ -7,20 +7,20 @@ The prototype allows a user to record a safety discussion they've had with a col
 ## Assumptions
 
 *   No requirement to view other users submissions (though could be easily extended to include this)
-..* And in fact due to lack of security you can pretty much view everyones :)
+  * And in fact due to lack of security you can pretty much view everyones :)
 *   No requirement to delete submissions (again, easily added)
-..* Did build an api endpoint for it but didnt wire up to anything.
+  * Did build an api endpoint for it but didnt wire up to anything.
 *   No offline support required.   
-..* i.e. No Service Workers/Caching etc
+  * i.e. No Service Workers/Caching etc
 
 ## Packages / Libraries used
 
 *   ASP.Net Core
-..* I decided to go cutting edge to keep things interesting :)
+  * I decided to go cutting edge to keep things interesting :)
 *   Entity Framework Core 
-..* As above.
+  * As above.
 *   Polymer Web Components
-..* To make hacking together a front end a bit easier!
+  * To make hacking together a front end a bit easier!
 
 Instructions provided below to (hopefully easily) automagically install the necessary dependencies.
 
@@ -32,7 +32,7 @@ Instructions provided below to (hopefully easily) automagically install the nece
 *   Run `dotnet restore` to grab the necessary nuget packages for the backend
 *   Run `bower install` to pull down the necessary front-end libraries.
 *   Run `dotnet run` to fire up a mini-web-server and serve up the app.
-..* Will also run using a debugger in VS Code.
+  * Will also run using a debugger in VS Code.
 *   Navigate to http://localhost:5000 to check things out.
 
 ## Prototype TODO:
