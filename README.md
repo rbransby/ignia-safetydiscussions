@@ -4,7 +4,7 @@ This repository is my response to the Ignia Safety Discussion prototype problem.
 
 The prototype allows a user to record a safety discussion they've had with a colleague and also review all their previous discussions.
 
-## Assumptions
+## Some Assumptions / Limitations...
 
 *   No requirement to view other users submissions (though could be easily extended to include this)
   * And in fact due to lack of security you can pretty much view everyones :)
@@ -12,6 +12,7 @@ The prototype allows a user to record a safety discussion they've had with a col
   * Did build an api endpoint for it but didnt wire up to anything.
 *   No offline support required.   
   * i.e. No Service Workers/Caching etc
+* As I will likely need to demo this on a simple Microsoft Surface, I deliberately didn't use Visual Studio to build the prototype and instead opted for VS Code which is more lightweight. I don't feel this held me back (much) :)
 
 ## Packages / Libraries used
 
@@ -20,7 +21,7 @@ The prototype allows a user to record a safety discussion they've had with a col
 *   Entity Framework Core 
   * As above.
 *   Polymer Web Components
-  * To make hacking together a front end a bit easier!
+  * To make hacking together a front end a bit easier! And Web Components are a great new technology.
 
 Instructions provided below to (hopefully easily) automagically install the necessary dependencies.
 
