@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SafetyDiscussionApplication.Data;
@@ -20,7 +17,6 @@ namespace SafetyDiscussionApplication.Controllers
         public async Task<IActionResult> Get()
         {
             var users = await _context.Users.ToListAsync();
-
             return Ok(users);
         }
     }       

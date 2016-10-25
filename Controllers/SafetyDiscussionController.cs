@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -65,8 +63,8 @@ namespace SafetyDiscussionApplication.Controllers
             int maxId = _context.SafetyDiscussions.Select(sd => sd.Id).Max();
             safetyDiscussion.Id = ++maxId;
             _context.SafetyDiscussions.Add(safetyDiscussion);
-            safetyDiscussion.Observer = await _context.Users.SingleOrDefaultAsync(sd => sd.Id == safetyDiscussion.ObserverUserId);
-            safetyDiscussion.Colleague = await _context.Users.SingleOrDefaultAsync(sd => sd.Id == safetyDiscussion.ColleagueUserId);
+            safetyDiscussion.Observer = _context.Users.SingleOrDefault(sd => sd.Id == safetyDiscussion.ObserverUserId);
+            safetyDiscussion.Colleague = _context.Users.SingleOrDefault(sd => sd.Id == safetyDiscussion.ColleagueUserId);
             await _context.SaveChangesAsync();
 
             return CreatedAtRoute("GetSafetyDiscussionById", new {id = safetyDiscussion.Id}, safetyDiscussion);
