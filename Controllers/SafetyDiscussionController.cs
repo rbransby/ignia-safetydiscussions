@@ -65,6 +65,8 @@ namespace SafetyDiscussionApplication.Controllers
             int maxId = _context.SafetyDiscussions.Select(sd => sd.Id).Max();
             safetyDiscussion.Id = ++maxId;
             _context.SafetyDiscussions.Add(safetyDiscussion);
+            safetyDiscussion.Observer = await _context.Users.SingleOrDefaultAsync(sd => sd.Id == safetyDiscussion.ObserverUserId);
+            safetyDiscussion.Colleague = await _context.Users.SingleOrDefaultAsync(sd => sd.Id == safetyDiscussion.ColleagueUserId);
             await _context.SaveChangesAsync();
 
             return CreatedAtRoute("GetSafetyDiscussionById", new {id = safetyDiscussion.Id}, safetyDiscussion);

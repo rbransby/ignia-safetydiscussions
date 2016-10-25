@@ -111,7 +111,7 @@
 		on-iron-overlay-closed="onAddDialogClosed">		
 		<h2>Add Safety Discussion</h2>
 		<paper-dropdown-menu id="selectedObserverDropdown" class="dialogItem" selected-item="{{selectedObserver}}" label="Observer">
-			<paper-listbox selected={{selectedObserverValue}} class="dropdown-content">
+			<paper-listbox selected={{selectedObserverValue}} attr-for-selected="id" class="dropdown-content">
 				<template is="dom-repeat" items="{{users}}">
 					<paper-item id$="{{item.id}}">{{item.displayName}}</paper-item>
 				</template>
@@ -123,7 +123,7 @@
 			<input id="dateInput" is="iron-input" value$="{{dateValue}}" type="date"></input>
 		</div>
 		<paper-input class="dialogItem" id="locationInput" value="{{locationValue}}" type="text" label="Location"></paper-input>
-		<paper-dropdown-menu attr-for-selected="id" class="dialogItem" selected-item={{selectedColleague}} label="Colleague observed">
+		<paper-dropdown-menu class="dialogItem" selected-item={{selectedColleague}} label="Colleague observed">
 			<paper-listbox class="dropdown-content">
 				<template is="dom-repeat" items="{{users}}">
 					<paper-item id$="{{item.id}}">{{item.displayName}}</paper-item>
@@ -190,7 +190,8 @@
     };
 
     app.postResponse = (e) => {
-        app.discussions.push(e.detail);
+        //app.discussions.push(e.detail.response);
+		app.push('discussions', e.detail.response);
         app.shouldShowNoItemsMessage = false;
         console.log(e);
     };
